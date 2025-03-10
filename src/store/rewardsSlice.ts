@@ -36,7 +36,6 @@ export const fetchRewards = createAsyncThunk(
     const response: Response = await axios.get(
       'https://staging.helloagain.at/api/v1/clients/5189/bounties/?limit=20&page=1',
     );
-    console.log('initial responsec', response.data);
 
     return {
       rewards: response.data.results.filter(result => result.image),
@@ -52,8 +51,6 @@ export const fetchNextRewards = createAsyncThunk(
   async (_, {getState}) => {
     const state = getState() as {rewards: RewardsState};
 
-    console.log('!! get next page fired', state.rewards.hasNextPage);
-
     // Prevent fetching if no next page
     if (!state.rewards.hasNextPage) {
       return {
@@ -67,7 +64,6 @@ export const fetchNextRewards = createAsyncThunk(
     const response: Response = await axios.get(
       `https://staging.helloagain.at/api/v1/clients/5189/bounties/?limit=20&page=${nextPage}`,
     );
-    console.log('!!! response: ', response.data);
 
     return {
       rewards: response.data.results.filter(result => result.image),
