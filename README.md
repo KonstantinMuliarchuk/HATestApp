@@ -1,97 +1,95 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# React Native Rewards App
 
-# Getting Started
+## Overview
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+This is a **React Native** application that fetches and displays rewards from an API. Users can collect rewards, and the app includes optimizations for performance and smooth infinite scrolling.
 
-## Step 1: Start Metro
+## Technologies Used
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+- **React Native 0.78** (Community CLI, not Expo)
+- **TypeScript**
+- **Redux Toolkit** for state management
+- **Reselect** for optimized state selection
+- **React Navigation** for screen transitions
+- **Axios** for API calls
+- **Clean Architecture** for maintainability and scalability
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## Features & Optimizations
 
-```sh
-# Using npm
-npm start
+### 🛠️ **State Management**
 
-# OR using Yarn
-yarn start
-```
+- **Redux Toolkit** with `createSlice` for handling rewards and collected rewards.
+- **Memoized selectors using Reselect** to prevent unnecessary re-renders.
 
-## Step 2: Build and run your app
+### 🔄 **Efficient Infinite Scrolling**
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+- Uses **pagination API**: `https://staging.helloagain.at/api/v1/clients/5189/bounties/?limit=5&page={page}`.
+- **Redux manages pagination state** (`currentPage`, `hasNextPage`).
+- **`fetchNextRewards`** handles pagination inside Redux.
+- Prevents redundant API calls when `hasNextPage === false`.
 
-### Android
+### ⚡ **Performance Optimizations**
 
-```sh
-# Using npm
-npm run android
+- **FlatList with `getItemLayout`**: Enables efficient scrolling.
+- **Memoized `RewardItem` component**: Prevents unnecessary re-renders.
+- **Lazy fetching with `onEndReached`**: Loads new rewards only when reaching the bottom.
+- **ListFooterComponent**: Shows a loading indicator only when fetching new data.
 
-# OR using Yarn
-yarn android
-```
+### 🏗 **Clean Architecture Implementation**
 
-### iOS
+The app follows **Clean Architecture**, ensuring:
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+- **Separation of concerns**: UI, business logic, and data layers are decoupled.
+- **Scalability**: Easy to extend and maintain.
+- **Testability**: Business logic is isolated for unit testing.
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+### 🖥️ **Screens**
 
-```sh
-bundle install
-```
+1. **RewardsScreen** - Displays a list of rewards with a "Collect" button.
+2. **CollectedRewardsScreen** - Displays only collected rewards.
 
-Then, and every time you update your native dependencies, run:
+## Setup & Installation
 
-```sh
-bundle exec pod install
-```
+1. **Clone the repository**
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+   ```sh
+   git clone <repo-url>
+   cd react-native-rewards
+   ```
 
-```sh
-# Using npm
-npm run ios
+2. **Install dependencies**
 
-# OR using Yarn
-yarn ios
-```
+   ```sh
+   npm install
+   ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+3. **Install React Navigation dependencies**
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+   ```sh
+   npm install @react-navigation/native @react-navigation/native-stack
+   npm install react-native-screens react-native-safe-area-context react-native-gesture-handler react-native-reanimated react-native-vector-icons
+   ```
 
-## Step 3: Modify your app
+4. **Start the development server**
 
-Now that you have successfully run the app, let's make changes!
+   ```sh
+   npm start --reset-cache
+   ```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+5. **Run the app** (for iOS or Android)
+   ```sh
+   npx react-native run-android  # For Android
+   npx react-native run-ios      # For iOS
+   ```
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## API Endpoint
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- Fetches rewards from: `https://staging.helloagain.at/api/v1/clients/5189/bounties/?limit=5&page={page}`
 
-## Congratulations! :tada:
+## Future Improvements
 
-You've successfully run and modified your React Native App. :partying_face:
+- Add filtering and sorting for rewards.
+- Implement persistent storage for collected rewards.
+- Improve UI design with animations and better styling.
 
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+🚀 **This app is fully optimized for performance and scalability!**
